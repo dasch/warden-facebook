@@ -12,7 +12,7 @@ Warden::Strategies.add(:facebook) do
 
         success!(user)
       rescue OAuth2::HTTPError
-        %(<p>Outdated ?code=#{params['code']}:</p><p>#{$!}</p><p><a href="/auth/facebook">Retry</a></p>)
+        error_page($!)
       end
     else
       throw(:halt, [302, {'Location' => authorize_url}, []])
@@ -52,5 +52,9 @@ Warden::Strategies.add(:facebook) do
                   request.port == 443 ? "" : ":#{request.port}"
                 end
     "#{request.scheme}://#{request.host}#{port_part}#{suffix}"
+  end
+
+  def error_page(exception)
+    %(<p>Outdated code <code>#{params['code']}</code>:</p><pre><code>#{exception}</code></pre><p><a href="/auth/facebook">Retry</a></p>)
   end
 end
