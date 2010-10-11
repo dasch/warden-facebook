@@ -4,6 +4,8 @@ Facebook Connect for Warden
 A [Warden](http://github.com/hassox/warden) strategy that provides Facebook
 Connect authentication through OAuth2.
 
+The implementation is based on Corey Donohoe's
+[warden-github](http://github.com/atmos/warden-github).
 
 Usage
 -----
